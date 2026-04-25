@@ -3,8 +3,21 @@ import { Link, useParams } from 'react-router-dom';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { useGetProductByIdQuery } from '../../entities/dummyJson/api/dummyJsonApi';
 import { Icon } from '../../shared/icons/Icons';
-import { CATALOG_VIEW_ALL, isTechCategory } from '../../shared/catalogDefaults';
+import { CATALOG_VIEW_ALL, formatFacetTagLabel, isTechCategory } from '../../shared/catalogDefaults';
 import './ProductDetailPage.css';
+
+function formatReviewDate(iso) {
+  if (!iso) return '';
+  try {
+    return new Date(iso).toLocaleDateString(undefined, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+  } catch {
+    return iso;
+  }
+}
 
 export function ProductDetailPage() {
   const { productId } = useParams();
@@ -47,6 +60,10 @@ export function ProductDetailPage() {
   const catalogHref = `/catalog?category=${encodeURIComponent(catalogCategory)}`;
   const mainSrc = images[activeIndex] ?? product.thumbnail;
   const last = images.length - 1;
+
+  const discount = Number(product.discountPercentage);
+  const hasDiscount = Number.isFinite(discount) && discount > 0;
+  const dims = product.dimensions;
 
   function goPrev() {
     setActiveIndex((i) => (i <= 0 ? last : i - 1));
@@ -122,17 +139,124 @@ export function ProductDetailPage() {
           <h1 className="product-detail__title">{product.title}</h1>
           <div className="product-detail__price-row">
             <span className="product-detail__price">${product.price}</span>
+            {hasDiscount && (
+              <span className="product-detail__discount" title="Discount from DummyJSON">
+                −{discount.toFixed(2)}% list discount
+              </span>
+            )}
             <span className="product-detail__rating">
               <Icon name="star" size={18} aria-hidden />
               {product.rating} · {product.stock} in stock
             </span>
           </div>
+          <p className="product-detail__availability">
+            <strong>{product.availabilityStatus || 'Availability unknown'}</strong>
+            {product.sku ? (
+              <>
+                {' '}
+                · SKU <code className="product-detail__code">{product.sku}</code>
+              </>
+            ) : null}
+          </p>
           <p className="product-detail__desc">{product.description}</p>
-          <ul className="product-detail__tags">
-            {(product.tags || []).map((t) => (
-              <li key={t}>{t}</li>
-            ))}
+
+          <div className="product-detail__markers">
+            <span className="product-detail__markers-label">Category</span>
+            <Link
+              className="product-detail__chip product-detail__chip--category"
+              to={`/catalog?category=${encodeURIComponent(product.category)}`}
+            >
+              {formatFacetTagLabel(product.category)}
+            </Link>
+            {(product.tags || []).length > 0 && (
+              <>
+                <span className="product-detail__markers-label">Tags</span>
+                <ul className="product-detail__chip-list">
+                  {(product.tags || []).map((t) => (
+                    <li key={t}>
+                      <Link
+                        className="product-detail__chip product-detail__chip--tag"
+                        to={`/catalog?category=${encodeURIComponent(CATALOG_VIEW_ALL)}&tags=${encodeURIComponent(t)}`}
+                      >
+                        {formatFacetTagLabel(t)}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+
+          <dl className="product-detail__specs">
+            {product.weight != null && (
+              <>
+                <dt>Weight</dt>
+                <dd>{product.weight} (demo units)</dd>
+              </>
+            )}
+            {dims && (dims.width != null || dims.height != null || dims.depth != null) && (
+              <>
+                <dt>Dimensions (W × H × D)</dt>
+                <dd>
+                  {[dims.width, dims.height, dims.depth].filter((v) => v != null).join(' × ')}
+                </dd>
+              </>
+            )}
+            {product.minimumOrderQuantity != null && (
+              <>
+                <dt>Minimum order</dt>
+                <dd>{product.minimumOrderQuantity} units</dd>
+              </>
+            )}
+          </dl>
+
+          <ul className="product-detail__logistics">
+            {product.warrantyInformation && (
+              <li>
+                <strong>Warranty</strong> {product.warrantyInformation}
+              </li>
+            )}
+            {product.shippingInformation && (
+              <li>
+                <strong>Shipping</strong> {product.shippingInformation}
+              </li>
+            )}
+            {product.returnPolicy && (
+              <li>
+                <strong>Returns</strong> {product.returnPolicy}
+              </li>
+            )}
           </ul>
+
+          {product.meta?.barcode && (
+            <p className="product-detail__meta-line">
+              <span className="product-detail__meta-label">Barcode</span>{' '}
+              <code className="product-detail__code">{product.meta.barcode}</code>
+            </p>
+          )}
+
+          {product.reviews?.length > 0 && (
+            <section className="product-detail__reviews" aria-labelledby="reviews-heading">
+              <h2 id="reviews-heading" className="product-detail__reviews-title">
+                Customer reviews ({product.reviews.length})
+              </h2>
+              <ul className="product-detail__review-list">
+                {product.reviews.map((r, idx) => (
+                  <li key={`${r.reviewerEmail || idx}-${r.date || idx}`} className="product-detail__review">
+                    <div className="product-detail__review-head">
+                      <span className="product-detail__review-name">{r.reviewerName}</span>
+                      <span className="product-detail__review-rating">
+                        <Icon name="star" size={14} aria-hidden />
+                        {r.rating}/5
+                      </span>
+                      <span className="product-detail__review-date">{formatReviewDate(r.date)}</span>
+                    </div>
+                    <p className="product-detail__review-text">{r.comment}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
         </div>
       </div>
     </article>

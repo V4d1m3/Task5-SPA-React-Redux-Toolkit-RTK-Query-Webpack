@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useGetProductCategoriesQuery, useGetProductListQuery } from '../../entities/dummyJson/api/dummyJsonApi';
-import { CATALOG_VIEW_ALL, pickTechCategories } from '../../shared/catalogDefaults';
+import { CATALOG_VIEW_ALL, aisleIconNameForSlug, pickTechCategories } from '../../shared/catalogDefaults';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { Icon } from '../../shared/icons/Icons';
 import './HomePage.css';
@@ -63,10 +63,9 @@ export function HomePage() {
               <li key={cat.slug}>
                 <Link className="home-aisle" to={`/catalog?category=${encodeURIComponent(cat.slug)}`}>
                   <span className="home-aisle__icon" aria-hidden>
-                    <Icon name="tag" size={20} />
+                    <Icon name={aisleIconNameForSlug(cat.slug)} size={20} />
                   </span>
-                  <span className="home-aisle__name">{cat.name}</span>
-                  <span className="home-aisle__slug">{cat.slug}</span>
+                  <span className="home-aisle__label">{cat.name}</span>
                   <Icon name="arrow-right" size={18} className="home-aisle__chevron" aria-hidden />
                 </Link>
               </li>

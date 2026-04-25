@@ -119,6 +119,52 @@ export function Icon({ name, size = 22, className = '', label, ...rest }) {
           <path d="M3 4h2l1 12h12l2-9H6" />
         </svg>
       );
+    case 'aisle-smartphone':
+      return (
+        <svg {...svgProps}>
+          <rect x="7" y="2" width="10" height="20" rx="2" />
+          <path d="M10 19h4" strokeWidth={1.5} />
+        </svg>
+      );
+    case 'aisle-laptop':
+      return (
+        <svg {...svgProps}>
+          <rect x="5" y="4" width="14" height="11" rx="1" />
+          <path d="M3 18h18" strokeWidth={1.75} />
+          <path d="M4 16h16" strokeWidth={1.25} />
+        </svg>
+      );
+    case 'aisle-tablet':
+      return (
+        <svg {...svgProps}>
+          <rect x="6" y="3" width="12" height="16" rx="1.5" />
+          <path d="M12 17h.01" strokeWidth={2} />
+        </svg>
+      );
+    case 'aisle-accessories':
+      return (
+        <svg {...svgProps}>
+          <path d="M5 14v2a2 2 0 0 0 2 2h1M19 14v2a2 2 0 0 1-2 2h-1" />
+          <path d="M5 14a7 7 0 0 1 7-7 7 7 0 0 1 7 7" />
+          <path d="M9 22v-4M15 22v-4" />
+        </svg>
+      );
+    case 'aisle-car':
+      return (
+        <svg {...svgProps}>
+          <path d="M3 17h18v-2l-2-5h-4l-2-4H9L7 10H5l-2 5v2Z" />
+          <circle cx="7.5" cy="17" r="1.5" fill="currentColor" stroke="none" />
+          <circle cx="16.5" cy="17" r="1.5" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    case 'aisle-motorcycle':
+      return (
+        <svg {...svgProps}>
+          <circle cx="7" cy="16" r="3" />
+          <circle cx="17" cy="16" r="3" />
+          <path d="M4 16h3l3-8h4l2 4h3l2 4h3" />
+        </svg>
+      );
     default:
       return (
         <svg {...svgProps}>
