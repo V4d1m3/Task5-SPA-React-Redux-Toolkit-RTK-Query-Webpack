@@ -1,0 +1,230 @@
+.catalog-page__head {
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .page-title {
+    font-size: 1.35rem;
+  }
+}
+
+.catalog-page__lead {
+  margin: 0.25rem 0 0;
+  color: #475569;
+  max-width: 42rem;
+}
+
+.catalog-page__range {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.catalog-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) minmax(0, 1.15fr) auto;
+  gap: 1rem 1.25rem;
+  align-items: end;
+  margin-bottom: 1.25rem;
+  padding: 1rem 1.1rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.65rem;
+}
+
+@media (max-width: 960px) {
+  .catalog-toolbar {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .catalog-toolbar {
+    grid-template-columns: 1fr;
+  }
+}
+
+.catalog-toolbar__search {
+  display: flex;
+  flex-direction: column;
+}
+
+.catalog-toolbar__search-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.catalog-toolbar__input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.45rem;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.95rem;
+}
+
+.catalog-toolbar__input:focus {
+  outline: 2px solid #93c5fd;
+  border-color: #3b82f6;
+}
+
+.catalog-toolbar__btn {
+  border: none;
+  border-radius: 0.45rem;
+  padding: 0.5rem 0.85rem;
+  font-weight: 600;
+  background: #1d4ed8;
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.catalog-toolbar__btn:hover {
+  background: #1e40af;
+}
+
+.catalog-toolbar__label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  margin-bottom: 0.35rem;
+}
+
+.catalog-toolbar__field {
+  display: flex;
+  flex-direction: column;
+}
+
+.catalog-toolbar__select {
+  border: 1px solid #cbd5e1;
+  border-radius: 0.45rem;
+  padding: 0.5rem 0.55rem;
+  font-size: 0.9rem;
+  background: #fff;
+}
+
+.catalog-toolbar__reset {
+  align-self: end;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  border-radius: 0.45rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+}
+
+.catalog-toolbar__reset:hover {
+  background: #e2e8f0;
+}
+
+.catalog-page__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+@media (max-width: 1100px) {
+  .catalog-page__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .catalog-page__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .catalog-page__grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+}
+
+.page-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 0;
+  font-size: 1.65rem;
+}
+
+.page-title__icon {
+  color: #1d4ed8;
+}
+
+.page-title__muted {
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: #64748b;
+  text-transform: capitalize;
+}
+
+.catalog-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1rem;
+  margin-top: 1.75rem;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.65rem;
+}
+
+@media (max-width: 520px) {
+  .catalog-pagination {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .catalog-pagination__status {
+    text-align: center;
+    order: -1;
+  }
+
+  .catalog-pagination__btn {
+    justify-content: center;
+  }
+}
+
+.catalog-pagination__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.45rem;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+.catalog-pagination__btn:hover:not(:disabled) {
+  border-color: #1d4ed8;
+  color: #1d4ed8;
+}
+
+.catalog-pagination__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.catalog-pagination__status {
+  font-size: 0.95rem;
+  color: #475569;
+}

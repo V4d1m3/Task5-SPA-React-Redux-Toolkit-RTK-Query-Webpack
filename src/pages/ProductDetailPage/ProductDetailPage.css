@@ -1,0 +1,242 @@
+.product-detail__crumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  margin-bottom: 1.25rem;
+  color: #64748b;
+}
+
+.product-detail__crumb a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.product-detail__crumb a:hover {
+  text-decoration: underline;
+}
+
+.product-detail__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .product-detail__layout {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+.product-detail__gallery {
+  background: #fff;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+  padding: 0.75rem;
+}
+
+@media (min-width: 769px) {
+  .product-detail__gallery {
+    padding: 1rem;
+  }
+}
+
+.product-detail__hero-wrap {
+  position: relative;
+  display: block;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+.product-detail__hero {
+  display: block;
+  width: 100%;
+  max-height: min(70vh, 520px);
+  height: auto;
+  object-fit: contain;
+}
+
+.product-detail__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 50%;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(255, 255, 255, 0.92);
+  color: #1e293b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.12);
+  backdrop-filter: blur(4px);
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.product-detail__nav:hover {
+  background: #1d4ed8;
+  color: #fff;
+  border-color: #1d4ed8;
+}
+
+.product-detail__nav--prev {
+  left: 0.4rem;
+}
+
+.product-detail__nav--next {
+  right: 0.4rem;
+}
+
+@media (max-width: 480px) {
+  .product-detail__nav {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .product-detail__nav--prev {
+    left: 0.25rem;
+  }
+
+  .product-detail__nav--next {
+    right: 0.25rem;
+  }
+}
+
+.product-detail__thumbs {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  padding-bottom: 0.25rem;
+}
+
+.product-detail__thumbs li {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+.product-detail__thumb {
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 0.4rem;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.product-detail__thumb img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 0.25rem;
+  display: block;
+}
+
+@media (min-width: 480px) {
+  .product-detail__thumb img {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+.product-detail__thumb--active {
+  border-color: #1d4ed8;
+  box-shadow: 0 0 0 1px #1d4ed8;
+}
+
+.product-detail__thumb:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+.product-detail__info {
+  background: #fff;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+  padding: 1rem 1.15rem;
+}
+
+@media (min-width: 769px) {
+  .product-detail__info {
+    padding: 1.25rem 1.5rem;
+  }
+}
+
+.product-detail__brand {
+  margin: 0 0 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+}
+
+.product-detail__title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.2rem, 4vw, 1.75rem);
+  line-height: 1.25;
+}
+
+.product-detail__price-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.product-detail__price {
+  font-size: clamp(1.35rem, 4vw, 1.75rem);
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.product-detail__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #a16207;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.product-detail__desc {
+  margin: 0 0 1rem;
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+.product-detail__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.product-detail__tags li {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #475569;
+}

@@ -1,0 +1,135 @@
+.product-card {
+  background: #fff;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover {
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    transform: translateY(-2px);
+  }
+}
+
+.product-card__media-link {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  background: #f1f5f9;
+}
+
+.product-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-card__badge {
+  position: absolute;
+  left: 0.5rem;
+  bottom: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.45rem;
+  border-radius: 0.35rem;
+  background: rgba(15, 23, 42, 0.85);
+  color: #e2e8f0;
+}
+
+.product-card__badge[data-status='Low Stock'] {
+  background: rgba(180, 83, 9, 0.95);
+}
+
+.product-card__body {
+  padding: 0.85rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.product-card__brand {
+  margin: 0;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+.product-card__title {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  flex: 1;
+}
+
+.product-card__title a {
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.product-card__title a:hover {
+  color: #1d4ed8;
+}
+
+.product-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.35rem;
+  gap: 0.5rem;
+}
+
+.product-card__price {
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.product-card__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.product-card__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: #ca8a04;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.product-card__add {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #1d4ed8;
+  border-radius: 999px;
+  background: #1d4ed8;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.product-card__add:hover {
+  background: #1e40af;
+  border-color: #1e40af;
+}
+
+.product-card__add--disabled,
+.product-card__add--disabled:hover {
+  background: #94a3b8;
+  border-color: #94a3b8;
+  cursor: not-allowed;
+}
