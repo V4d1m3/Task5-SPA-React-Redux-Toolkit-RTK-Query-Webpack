@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { skipToken } from '@reduxjs/toolkit/query';
+import { useDispatch, useSelector } from 'react-redux';
 import { useGetProductByIdQuery } from '../../entities/dummyJson/api/dummyJsonApi';
+import { addToCart, removeFromCart, setNotice } from '../../app/appSlice';
 import { Icon } from '../../shared/icons/Icons';
 import { CATALOG_VIEW_ALL, formatFacetTagLabel, isTechCategory } from '../../shared/catalogDefaults';
 import './ProductDetailPage.css';
@@ -20,7 +22,9 @@ function formatReviewDate(iso) {
 }
 
 export function ProductDetailPage() {
+  const dispatch = useDispatch();
   const { productId } = useParams();
+  const inCart = useSelector((s) => (productId ? Boolean(s.app.cart[String(productId)]) : false));
   const { data: product, isFetching, isError } = useGetProductByIdQuery(productId ?? skipToken);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -64,6 +68,7 @@ export function ProductDetailPage() {
   const discount = Number(product.discountPercentage);
   const hasDiscount = Number.isFinite(discount) && discount > 0;
   const dims = product.dimensions;
+  const isOutOfStock = product.availabilityStatus === 'Out of Stock';
 
   function goPrev() {
     setActiveIndex((i) => (i <= 0 ? last : i - 1));
@@ -71,6 +76,43 @@ export function ProductDetailPage() {
 
   function goNext() {
     setActiveIndex((i) => (i >= last ? 0 : i + 1));
+  }
+
+  function handleAddToCart() {
+    if (isOutOfStock) {
+      dispatch(
+        setNotice({
+          kind: 'warning',
+          message: `${product.title} is out of stock and cannot be added.`,
+        }),
+      );
+      return;
+    }
+
+    dispatch(
+      addToCart({
+        id: product.id,
+        title: product.title,
+        thumbnail: product.thumbnail,
+        price: product.price,
+      }),
+    );
+    dispatch(
+      setNotice({
+        kind: 'success',
+        message: `${product.title} added to cart.`,
+      }),
+    );
+  }
+
+  function handleRemoveFromCart() {
+    dispatch(removeFromCart(product.id));
+    dispatch(
+      setNotice({
+        kind: 'info',
+        message: `${product.title} removed from cart.`,
+      }),
+    );
   }
 
   return (
@@ -158,6 +200,29 @@ export function ProductDetailPage() {
               </>
             ) : null}
           </p>
+          <div className="product-detail__actions">
+            <button
+              type="button"
+              className={`product-detail__add${isOutOfStock ? ' product-detail__add--disabled' : ''}`}
+              onClick={handleAddToCart}
+              aria-label={isOutOfStock ? `${product.title} is out of stock` : `Add ${product.title} to cart`}
+              title={isOutOfStock ? 'Out of stock' : 'Add to cart'}
+            >
+              <Icon name="cart" size={18} aria-hidden />
+              Add to cart
+            </button>
+            {inCart && (
+              <button
+                type="button"
+                className="product-detail__remove"
+                onClick={handleRemoveFromCart}
+                aria-label={`Remove ${product.title} from cart`}
+                title="Remove from cart"
+              >
+                Remove from cart
+              </button>
+            )}
+          </div>
           <p className="product-detail__desc">{product.description}</p>
 
           <div className="product-detail__markers">

@@ -26,6 +26,10 @@ const appSlice = createSlice({
     clearCart(state) {
       state.cart = {};
     },
+    removeFromCart(state, { payload }) {
+      const id = String(payload);
+      delete state.cart[id];
+    },
     setNotice(state, { payload }) {
       state.notice = {
         kind: payload.kind || 'info',
@@ -38,5 +42,5 @@ const appSlice = createSlice({
   },
 });
 
-export const { addToCart, clearCart, setNotice, clearNotice } = appSlice.actions;
+export const { addToCart, clearCart, removeFromCart, setNotice, clearNotice } = appSlice.actions;
 export const appReducer = appSlice.reducer;

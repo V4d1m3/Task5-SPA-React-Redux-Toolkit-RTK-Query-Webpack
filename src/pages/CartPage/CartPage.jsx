@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearCart } from '../../app/appSlice';
+import { clearCart, removeFromCart, setNotice } from '../../app/appSlice';
 import { Icon } from '../../shared/icons/Icons';
 import './CartPage.css';
 
@@ -27,14 +27,31 @@ export function CartPage() {
           <ul className="cart-page__list">
             {items.map((item) => (
               <li key={item.id} className="cart-page__item">
-                <img src={item.thumbnail} alt="" width={86} height={86} />
-                <div>
-                  <h2>{item.title}</h2>
-                  <p>
-                    ${item.price} x {item.qty}
-                  </p>
-                </div>
-                <strong>${(item.price * item.qty).toFixed(2)}</strong>
+                <Link to={`/products/${item.id}`} className="cart-page__item-link">
+                  <img src={item.thumbnail} alt="" width={86} height={86} />
+                  <div>
+                    <h2>{item.title}</h2>
+                    <p>
+                      ${item.price} x {item.qty}
+                    </p>
+                  </div>
+                </Link>
+                <strong className="cart-page__line-total">${(item.price * item.qty).toFixed(2)}</strong>
+                <button
+                  type="button"
+                  className="cart-page__remove-btn"
+                  onClick={() => {
+                    dispatch(removeFromCart(item.id));
+                    dispatch(
+                      setNotice({
+                        kind: 'info',
+                        message: `${item.title} removed from cart.`,
+                      }),
+                    );
+                  }}
+                >
+                  Remove
+                </button>
               </li>
             ))}
           </ul>
