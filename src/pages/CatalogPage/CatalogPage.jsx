@@ -621,9 +621,9 @@ export function CatalogPage() {
       {data?.products && !isError && (
         <>
           <ul className="catalog-page__grid">
-            {data.products.map((p) => (
+            {data.products.map((p, index) => (
               <li key={p.id}>
-                <ProductCard product={p} />
+                <ProductCard product={p} imageLoading={index < 4 ? 'eager' : 'lazy'} />
               </li>
             ))}
           </ul>

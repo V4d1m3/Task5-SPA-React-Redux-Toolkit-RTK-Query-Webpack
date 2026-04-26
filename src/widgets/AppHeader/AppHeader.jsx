@@ -27,7 +27,7 @@ export function AppHeader() {
   return (
     <header className="app-header">
       <div className="app-header__inner">
-        <Link to="/" className="app-header__brand">
+        <Link to="/" className="app-header__brand" aria-label="Home">
           <span className="app-header__brand-icon" aria-hidden>
             <Icon name="logo-device" size={28} />
           </span>
@@ -38,10 +38,6 @@ export function AppHeader() {
         </Link>
 
         <nav className="app-header__nav" aria-label="Main">
-          <NavLink to="/" end className={navClass}>
-            <Icon name="home" size={20} aria-hidden />
-            <span>Home</span>
-          </NavLink>
           <NavLink to="/catalog" className={navClass}>
             <Icon name="grid" size={20} aria-hidden />
             <span>Catalog</span>

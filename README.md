@@ -133,6 +133,16 @@ TASK5_INNO/
 
 - GitHub Pages: [https://v4d1m3.github.io/Task5-SPA-React-Redux-Toolkit-RTK-Query-Webpack/](https://v4d1m3.github.io/Task5-SPA-React-Redux-Toolkit-RTK-Query-Webpack/)
 - Команда публикации: `npm run deploy:gh-pages`
+- Для SPA на GitHub Pages в `dist/` создаётся `404.html` (копия `index.html`), чтобы прямые заходы на маршруты вроде `/catalog` не отдавали пустой 404 без приложения.
+
+## Lighthouse / доступность (что подправлено в коде)
+
+- SEO: meta description в `public/index.html`.
+- Контраст: более тёмные цвета для подписей каталога, рейтинга карточек, меток и дат на странице товара.
+- ARIA: галерея миниатюр без некорректного `tablist`/`tab`; у кнопок выбора кадра есть `aria-label` и `aria-pressed`.
+- Навигация: одна ссылка на главную в шапке (логотип с `aria-label="Home"`), без дублирующего пункта «Home».
+- LCP: `fetchPriority="high"` у главного изображения товара; у части карточек каталога и первой на главной — `loading="eager"`.
+- Сборка: в production CSS выносится в отдельный минифицированный файл (`MiniCssExtractPlugin` + `css-minimizer-webpack-plugin`).
 
 ---
 

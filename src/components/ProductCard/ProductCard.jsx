@@ -4,7 +4,7 @@ import { addToCart, setNotice } from '../../app/appSlice';
 import { Icon } from '../../shared/icons/Icons';
 import './ProductCard.css';
 
-export function ProductCard({ product }) {
+export function ProductCard({ product, imageLoading = 'lazy' }) {
   const dispatch = useDispatch();
   const { id, title, thumbnail, price, rating, brand, availabilityStatus } = product;
   const isOutOfStock = availabilityStatus === 'Out of Stock';
@@ -32,7 +32,14 @@ export function ProductCard({ product }) {
   return (
     <article className="product-card">
       <Link to={`/products/${id}`} className="product-card__media-link">
-        <img className="product-card__img" src={thumbnail} alt="" loading="lazy" width={320} height={320} />
+        <img
+          className="product-card__img"
+          src={thumbnail}
+          alt=""
+          loading={imageLoading}
+          width={320}
+          height={320}
+        />
         <span className="product-card__badge" data-status={availabilityStatus}>
           <Icon name="tag" size={14} aria-hidden />
           {availabilityStatus}

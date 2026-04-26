@@ -84,9 +84,9 @@ export function HomePage() {
         </p>
         {teaser?.products && (
           <ul className="home-teaser__grid">
-            {teaser.products.map((p) => (
+            {teaser.products.map((p, index) => (
               <li key={p.id}>
-                <ProductCard product={p} />
+                <ProductCard product={p} imageLoading={index === 0 ? 'eager' : 'lazy'} />
               </li>
             ))}
           </ul>

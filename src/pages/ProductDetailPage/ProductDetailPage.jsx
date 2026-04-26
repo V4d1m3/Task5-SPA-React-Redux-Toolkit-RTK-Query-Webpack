@@ -142,7 +142,14 @@ export function ProductDetailPage() {
                 <Icon name="chevron-left" size={22} aria-hidden />
               </button>
             )}
-            <img className="product-detail__hero" src={mainSrc} alt="" width={560} height={560} />
+            <img
+              className="product-detail__hero"
+              src={mainSrc}
+              alt={product.title}
+              width={560}
+              height={560}
+              fetchPriority="high"
+            />
             {images.length > 1 && (
               <button
                 type="button"
@@ -156,13 +163,13 @@ export function ProductDetailPage() {
           </div>
 
           {images.length > 0 && (
-            <ul className="product-detail__thumbs" role="tablist" aria-label="Product images">
+            <ul className="product-detail__thumbs" aria-label="Product images">
               {images.map((src, index) => (
                 <li key={`${index}-${src}`}>
                   <button
                     type="button"
-                    role="tab"
-                    aria-selected={index === activeIndex}
+                    aria-pressed={index === activeIndex}
+                    aria-label={`Show product image ${index + 1} of ${images.length}`}
                     className={`product-detail__thumb${index === activeIndex ? ' product-detail__thumb--active' : ''}`}
                     onClick={() => setActiveIndex(index)}
                   >

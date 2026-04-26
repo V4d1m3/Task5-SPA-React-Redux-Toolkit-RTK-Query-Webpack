@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = (env, argv) => {
   const isProd = argv.mode === 'production';
@@ -25,16 +27,30 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader'],
+          use: [isProd ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader'],
         },
       ],
     },
     plugins: [
+      ...(isProd
+        ? [
+            new MiniCssExtractPlugin({
+              filename: 'css/[name].[contenthash:8].css',
+            }),
+          ]
+        : []),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'public', 'index.html'),
         inject: 'body',
       }),
     ],
+    ...(isProd
+      ? {
+          optimization: {
+            minimizer: ['...', new CssMinimizerPlugin()],
+          },
+        }
+      : {}),
     devServer: {
       historyApiFallback: true,
       hot: true,
