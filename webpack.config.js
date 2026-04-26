@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => {
   const isProd = argv.mode === 'production';
+  const ghPagesBase = '/Task5-SPA-React-Redux-Toolkit-RTK-Query-Webpack/';
 
   return {
     entry: path.resolve(__dirname, 'src', 'main.jsx'),
@@ -10,7 +11,7 @@ module.exports = (env, argv) => {
       path: path.resolve(__dirname, 'dist'),
       filename: isProd ? 'js/[name].[contenthash:8].js' : 'js/[name].js',
       clean: true,
-      publicPath: '/',
+      publicPath: isProd ? ghPagesBase : '/',
     },
     resolve: {
       extensions: ['.js', '.jsx'],

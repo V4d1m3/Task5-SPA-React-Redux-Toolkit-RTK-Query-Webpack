@@ -8,4 +8,10 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
   },
+  overrides: [
+    {
+      files: ['src/main.jsx'],
+      env: { node: true },
+    },
+  ],
 };
