@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon } from '../../shared/icons/Icons';
@@ -15,6 +15,7 @@ export function AppHeader() {
   const cart = useSelector((s) => s.app.cart);
   const notice = useSelector((s) => s.app.notice);
   const [accountOpen, setAccountOpen] = useState(false);
+  const accountWrapRef = useRef(null);
   const cartItems = useMemo(() => Object.values(cart), [cart]);
   const cartQty = useMemo(() => cartItems.reduce((acc, item) => acc + item.qty, 0), [cartItems]);
 
@@ -23,6 +24,29 @@ export function AppHeader() {
     const id = window.setTimeout(() => dispatch(clearNotice()), 2400);
     return () => window.clearTimeout(id);
   }, [notice, dispatch]);
+
+  useEffect(() => {
+    if (!accountOpen) return undefined;
+
+    function handleOutsideClick(event) {
+      if (!accountWrapRef.current?.contains(event.target)) {
+        setAccountOpen(false);
+      }
+    }
+
+    function handleEscape(event) {
+      if (event.key === 'Escape') {
+        setAccountOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [accountOpen]);
 
   return (
     <header className="app-header">
@@ -43,7 +67,7 @@ export function AppHeader() {
             <span>Catalog</span>
           </NavLink>
           {token ? (
-            <div className="app-header__menu-wrap">
+            <div className="app-header__menu-wrap" ref={accountWrapRef}>
               <button
                 type="button"
                 className="app-header__link app-header__menu-btn"

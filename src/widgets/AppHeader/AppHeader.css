@@ -215,6 +215,11 @@
   border-color: #f59e0b;
 }
 
+.app-header__notice--info {
+  background: #1e3a8a;
+  border-color: #3b82f6;
+}
+
 @media (max-width: 720px) {
   .app-header__inner {
     flex-direction: column;

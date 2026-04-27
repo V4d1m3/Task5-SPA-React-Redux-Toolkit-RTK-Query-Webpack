@@ -38,10 +38,12 @@ export function HomePage() {
               <Icon name="grid" size={20} aria-hidden />
               Open catalog
             </Link>
-            <Link className="home-hero__btn home-hero__btn--ghost" to={token ? '/catalog' : '/login'}>
-              <Icon name="user" size={20} aria-hidden />
-              {token ? 'Continue shopping' : 'Sign in'}
-            </Link>
+            {!token && (
+              <Link className="home-hero__btn home-hero__btn--ghost" to="/login">
+                <Icon name="user" size={20} aria-hidden />
+                Sign in
+              </Link>
+            )}
           </div>
         </div>
       </section>

@@ -16,7 +16,6 @@ import {
 } from '../../shared/catalogDefaults';
 import './CatalogPage.css';
 
-/** Slightly larger pages; merged tech categories are still small enough for client pagination. */
 const PAGE_SIZE = 24;
 
 const SORT_OPTIONS = [
@@ -60,7 +59,6 @@ function formatMoney(n) {
   return n.toLocaleString(undefined, { maximumFractionDigits: 2 });
 }
 
-/** Parse price from URL (supports comma decimals and thin spaces). */
 function parseUrlPrice(raw) {
   if (raw == null || raw === '') return NaN;
   const normalized = String(raw).replace(/\u00a0/g, ' ').replace(/\s/g, '').replace(',', '.');

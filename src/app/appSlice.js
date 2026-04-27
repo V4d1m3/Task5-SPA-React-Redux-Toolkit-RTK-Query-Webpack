@@ -28,6 +28,12 @@ const appSlice = createSlice({
     },
     removeFromCart(state, { payload }) {
       const id = String(payload);
+      const prev = state.cart[id];
+      if (!prev) return;
+      if (prev.qty > 1) {
+        prev.qty -= 1;
+        return;
+      }
       delete state.cart[id];
     },
     setNotice(state, { payload }) {
