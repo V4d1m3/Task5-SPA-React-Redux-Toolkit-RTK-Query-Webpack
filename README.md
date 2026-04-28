@@ -1,69 +1,69 @@
 # Task 5 — React SPA (Webpack + Redux Toolkit + RTK Query)
 
-Учебное многостраничное SPA на React без Create React App.  
-Проект использует React Router для навигации, Redux Toolkit для клиентского состояния, RTK Query для API-слоя и кэширования запросов к DummyJSON, и нативный CSS для UI.
+Educational multi-page React SPA without Create React App.  
+The project uses React Router for navigation, Redux Toolkit for client state, RTK Query as the API layer with request caching for DummyJSON, and plain CSS for the UI.
 
-## Текущая функциональность
+## Current functionality
 
-- Страницы:
+- Pages:
   - `/` — Home.
-  - `/login` — авторизация через DummyJSON.
-  - `/catalog` — каталог с поиском, сортировкой, фильтрами, пагинацией.
-  - `/products/:productId` — детальная страница продукта.
-  - `/cart` — корзина.
-- Работа с API:
-  - логин (`POST /auth/login`);
-  - категории;
-  - список продуктов (включая поиск/фильтрацию/сортировку);
-  - продукт по id.
-- Глобальное состояние:
-  - сессия пользователя (`auth`);
-  - корзина + уведомления (`app`).
-- Корзина:
-  - добавление из каталога и детальной страницы;
-  - удаление из корзины;
-  - удаление с детальной страницы (если товар уже в корзине).
+  - `/login` — authentication via DummyJSON.
+  - `/catalog` — catalog with search, sorting, filters, and pagination.
+  - `/products/:productId` — product details page.
+  - `/cart` — shopping cart.
+- API:
+  - login (`POST /auth/login`);
+  - categories;
+  - product list (including search/filtering/sorting);
+  - product by id.
+- Global state:
+  - user session (`auth`);
+  - cart + notifications (`app`).
+- Cart:
+  - add from catalog and product details page;
+  - remove from cart;
+  - remove from the product details page (if the item is already in the cart).
 - Persistence:
-  - `token`, `refreshToken`, `user` и содержимое корзины сохраняются в `localStorage` и восстанавливаются после перезагрузки страницы.
+  - `token`, `refreshToken`, `user`, and cart contents are stored in `localStorage` and restored after page reload.
 
-## Что и как используется
+## What is used and how
 
 ### Redux Toolkit
 
-В проекте используется `configureStore` + `createSlice`:
+The project uses `configureStore` + `createSlice`:
 
 - `src/features/auth/authSlice.js`:
-  - хранит `token`, `refreshToken`, `user`;
-  - обновляет сессию через `extraReducers` на успешный `login.matchFulfilled`;
-  - имеет action `logout`.
+  - stores `token`, `refreshToken`, `user`;
+  - updates the session via `extraReducers` on successful `login.matchFulfilled`;
+  - provides the `logout` action.
 - `src/app/appSlice.js`:
-  - корзина (`cart`);
-  - уведомления (`notice`);
+  - cart (`cart`);
+  - notifications (`notice`);
   - actions `addToCart`, `removeFromCart`, `clearCart`, `setNotice`, `clearNotice`.
 - `src/app/store.js`:
-  - объединяет `app`, `auth`, и RTK Query reducer;
-  - подключает RTK Query middleware;
-  - загружает `preloadedState` из `localStorage` и подписывается на сохранение state.
+  - combines `app`, `auth`, and the RTK Query reducer;
+  - adds RTK Query middleware;
+  - loads `preloadedState` from `localStorage` and subscribes to state persistence.
 
 ### RTK Query
 
-В проекте есть единый API-сервис `src/entities/dummyJson/api/dummyJsonApi.js`:
+The project has a single API service: `src/entities/dummyJson/api/dummyJsonApi.js`:
 
-- `createApi` с `reducerPath: 'dummyJsonApi'`;
+- `createApi` with `reducerPath: 'dummyJsonApi'`;
 - endpoints:
   - `getProductCategories`,
   - `getTechFacetTags`,
   - `getProductList`,
   - `getProductById`,
   - `login`.
-- автосгенерированные хуки применяются в страницах:
+- generated hooks are used in pages:
   - `useLoginMutation` — `LoginPage`,
-  - `useGetProductCategoriesQuery`, `useGetProductListQuery`, `useGetTechFacetTagsQuery` — `HomePage` и `CatalogPage`,
+  - `useGetProductCategoriesQuery`, `useGetProductListQuery`, `useGetTechFacetTagsQuery` — `HomePage` and `CatalogPage`,
   - `useGetProductByIdQuery` — `ProductDetailPage`.
 
-RTK Query обеспечивает кэширование ответов, повторное использование данных и удобные состояния загрузки/ошибки для UI (`isFetching`, `isError`, `error`).
+RTK Query provides response caching, data reuse, and convenient loading/error states for the UI (`isFetching`, `isError`, `error`).
 
-## Технологии
+## Tech stack
 
 - `react`, `react-dom`
 - `react-router-dom`
@@ -74,16 +74,16 @@ RTK Query обеспечивает кэширование ответов, пов
 - `css-loader`, `style-loader`
 - `eslint`, `eslint-plugin-react`, `eslint-plugin-react-hooks`
 
-## Запуск проекта
+## Running the project
 
 ```bash
 npm install
 npm start
 ```
 
-Dev server по умолчанию: [http://localhost:3000](http://localhost:3000)
+Default dev server: [http://localhost:3000](http://localhost:3000)
 
-Демо-пользователь для проверки логина:
+Demo user for login testing:
 - `username`: `emilys`
 - `password`: `emilyspass`
 
@@ -93,17 +93,17 @@ Production build:
 npm run build
 ```
 
-Сборка генерируется в `dist/`.
+The build output is generated in `dist/`.
 
-## Скрипты
+## Scripts
 
-- `npm start` — запуск dev-сервера Webpack.
-- `npm run build` — production-сборка.
-- `npm run lint` — ESLint для `src/**/*.{js,jsx}`.
-- `npm run prepare:gh-pages` — создаёт `dist/404.html` для SPA fallback на GitHub Pages.
-- `npm run deploy:gh-pages` — сборка и публикация `dist` в GitHub Pages.
+- `npm start` — start the Webpack dev server.
+- `npm run build` — production build.
+- `npm run lint` — ESLint for `src/**/*.{js,jsx}`.
+- `npm run prepare:gh-pages` — creates `dist/404.html` for SPA fallback on GitHub Pages.
+- `npm run deploy:gh-pages` — builds and publishes `dist` to GitHub Pages.
 
-## Структура проекта
+## Project structure
 
 ```text
 TASK5_INNO/
@@ -129,21 +129,21 @@ TASK5_INNO/
 └── package.json
 ```
 
-## Деплой
+## Deployment
 
 - GitHub Pages: [https://v4d1m3.github.io/Task5-SPA-React-Redux-Toolkit-RTK-Query-Webpack/](https://v4d1m3.github.io/Task5-SPA-React-Redux-Toolkit-RTK-Query-Webpack/)
-- Команда публикации: `npm run deploy:gh-pages`
-- Для SPA на GitHub Pages в `dist/` создаётся `404.html` (копия `index.html`), чтобы прямые заходы на маршруты вроде `/catalog` не отдавали пустой 404 без приложения.
+- Publish command: `npm run deploy:gh-pages`
+- For SPA routing on GitHub Pages, `dist/404.html` is created (a copy of `index.html`) so direct navigation to routes like `/catalog` does not return an empty 404 without the app.
 
-## Lighthouse / доступность (что подправлено в коде)
+## Lighthouse / accessibility (changes made)
 
-- SEO: meta description в `public/index.html`.
-- Контраст: более тёмные цвета для подписей каталога, рейтинга карточек, меток и дат на странице товара.
-- ARIA: галерея миниатюр без некорректного `tablist`/`tab`; у кнопок выбора кадра есть `aria-label` и `aria-pressed`.
-- Навигация: одна ссылка на главную в шапке (логотип с `aria-label="Home"`), без дублирующего пункта «Home».
-- LCP: `fetchPriority="high"` у главного изображения товара; у части карточек каталога и первой на главной — `loading="eager"`.
-- Сборка: в production CSS выносится в отдельный минифицированный файл (`MiniCssExtractPlugin` + `css-minimizer-webpack-plugin`).
+- SEO: meta description in `public/index.html`.
+- Contrast: darker colors for catalog captions, card rating, labels, and dates on the product page.
+- ARIA: thumbnail gallery without incorrect `tablist`/`tab`; frame selection buttons have `aria-label` and `aria-pressed`.
+- Navigation: a single Home link in the header (logo with `aria-label="Home"`), without a duplicate “Home” item.
+- LCP: `fetchPriority="high"` for the main product image; some catalog cards and the first one on the home page use `loading="eager"`.
+- Build: in production, CSS is extracted into a separate minified file (`MiniCssExtractPlugin` + `css-minimizer-webpack-plugin`).
 
 ---
 
-Учебный проект.
+Educational project.
